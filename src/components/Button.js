@@ -1,32 +1,33 @@
 import React from 'react';
 
-export default function Button(props) {
+// Add 'display' to the props here
+export default function Button({ send, display }) {
+  const buttons = [
+    "AC", "C", "/", "*",
+    "9", "8", "7", "-",
+    "6", "5", "4", "+",
+    "3", "2", "1", "%",
+    "0", ".", "="
+  ];
+
+  const isSymbol = (val) => ["AC", "C", "/", "*", "-", "+", "%", "="].includes(val);
   return (
     <div className="button-container">
+      {/* Now you can use display here */}
+      <div className="display">
+        <h2>{display}</h2>
+      </div>
+      
       <div className="grid-sec">
-        <button onClick={() => props.send("AC")} className="sym">AC</button>
-        <button onClick={() => props.send("C")} className="sym">⌫</button>
-        <button onClick={() => props.send("/")} className="sym">/</button>
-        <button onClick={() => props.send("*")} className="sym">*</button>
-
-        <button onClick={() => props.send("9")}>9</button>
-        <button onClick={() => props.send("8")}>8</button>
-        <button onClick={() => props.send("7")}>7</button>
-        <button onClick={() => props.send("-")} className="sym">-</button>
-
-        <button onClick={() => props.send("6")}>6</button>
-        <button onClick={() => props.send("5")}>5</button>
-        <button onClick={() => props.send("4")}>4</button>
-        <button onClick={() => props.send("+")} className="sym">+</button>
-
-        <button onClick={() => props.send("3")}>3</button>
-        <button onClick={() => props.send("2")}>2</button>
-        <button onClick={() => props.send("1")}>1</button>
-        <button onClick={() => props.send("%")} className="sym">%</button>
-
-        <button onClick={() => props.send("0")}>0</button>
-        <button onClick={() => props.send(".")}>.</button>
-        <button onClick={() => props.send("=")} className="sym equal">=</button>
+        {buttons.map((btn, idx) => (
+          <button
+            key={idx}
+            onClick={() => send(btn)}
+            className={`button ${isSymbol(btn) ? 'sym' : ''} ${btn === '=' ? 'equal' : ''}`}
+          >
+            {btn === "C" ? "⌫" : btn}
+          </button>
+        ))}
       </div>
     </div>
   );
